@@ -12,9 +12,9 @@ Landing page for **Seat Cover Review** (seatcoverreview.com) promoting Seat Cove
    - Front only — $279
    - Rear only — $279
 2. Price, button text, the "Your selection" summary and the Part # update instantly.
-3. The main button opens the **Seat Cover Solutions checkout** in a new tab with the chosen item already in the cart, plus these order details: vehicle, setup, color, Part #, rear seat configuration and `Referred By: seatcoverreview.com / lp2`. UTM tags (`utm_source=seatcoverreview`) are passed too.
+3. Every buy button on the page (buy box, header, sticky bars, final section) opens the **Seat Cover Solutions checkout** in a new tab with the chosen item already in the cart. Under the item the checkout shows: Your Vehicle, Coverage, Color, Rear Seat (when included) and Part #. The order also carries `Referred By: seatcoverreview.com / lp2`, the button that was clicked, and UTM tags (`utm_source=seatcoverreview`).
 
-Checkout uses Shopify's public cart link (`/cart/{variantId}:1`), so no store login, API key or backend is needed.
+The cart is created with Shopify's public (tokenless) Storefront API `cartCreate`. If that call fails, the page falls back to Shopify's public cart link (`/cart/{variantId}:1`). No store login, API key or backend is needed.
 
 ## Where to edit
 
@@ -25,7 +25,8 @@ Everything lives in `index.html`. Inside the `<script>` at the bottom:
 | Prices, labels of the coverage options | `SETUPS` |
 | Colors and their images | `COLORS` |
 | Shopify variant IDs and Part # for each combo | `VARIANTS` |
-| Header / sticky / final buttons: scroll to options or go straight to checkout | `CONFIG.primaryCtaMode` (`'configurator'` or `'checkout'`) |
+| Details shown under the item at checkout | `lineDetails()` |
+| Store API endpoint | `CONFIG.storefrontApi` |
 | UTM tags | `CONFIG.utm` |
 
 If Seat Cover Solutions changes a price, update `SETUPS` (checkout always shows their real price).
