@@ -18,7 +18,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://seatcoverreview.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js');</script>
+<script>
+document.documentElement.classList.add('js');
+/* Preview hosts only (e.g. GitHub Pages): seatcoverreview.com blocks image/video hotlinking by referrer,
+   so outside the live domain we stop sending the referrer. No effect on the live site. */
+if(!/(^|\.)seatcoverreview\.com$/.test(location.hostname)){var m=document.createElement('meta');m.name='referrer';m.content='no-referrer';document.head.appendChild(m);}
+</script>
 <style>
 /* =====================================================================
    1. TOKENS
