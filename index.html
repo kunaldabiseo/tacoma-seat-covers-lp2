@@ -214,7 +214,9 @@ legend.optlabel+*{clear:both}
 .buy .cta{display:grid;gap:10px;margin:18px 0 0}
 .buy .cta .btn{width:100%;font-size:16px;padding:12px 16px}
 .ctawrap{display:flex;flex-direction:column;align-items:center;line-height:1.2}
-.ctawrap small{font-size:12px;font-weight:600;opacity:.72;margin-top:3px;letter-spacing:.01em}
+.ctawrap small{font-size:12px;font-weight:600;opacity:.72;margin-top:3px;letter-spacing:.01em;text-transform:none}
+.sticky .btn,.final .btn{padding-top:10px;padding-bottom:10px}
+.mstickycta{padding-top:10px!important;padding-bottom:10px!important}
 .howto{font-size:12.5px;color:var(--mut);margin:10px 0 0;text-align:center;line-height:1.5}
 .cfgerr{margin:12px 0 0;background:var(--danger-soft);color:var(--danger);border:1px solid #fecdca;border-radius:12px;padding:10px 14px;font-size:13px;font-weight:600}
 .cfgerr[hidden]{display:none}
@@ -416,7 +418,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wa
   <a class="brand" href="#top"><img referrerpolicy="no-referrer" src="https://seatcoverreview.com/wp-content/uploads/elementor/thumbs/cropped-shared-image-rlpoh4yyj19odafr3sq1eyy7hsvss7gx44whirtp28.jpeg" alt="" width="32" height="32">Seat Cover <b>Review</b></a>
   <span class="hymm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13M5 13h14v4H5zM7 17v2M17 17v2"/></svg>2024 Toyota Tacoma<span class="lg">&nbsp;Seat Covers</span></span>
   <nav class="hnav" aria-label="Page sections"><a class="lnk" href="#highlights">Features</a><a class="lnk" href="#reviews">Reviews</a><a class="lnk" href="#faq">FAQ</a>
-    <a class="btn btn-primary btn-sm" data-checkout data-cta="lp2-nav" href="https://www.seatcoversolutions.com/pages/2024-toyota-tacoma-deal-luxury-seat-covers?utm_source=seatcoverreview&amp;utm_medium=affiliate&amp;utm_campaign=2024_toyota_tacoma_seat_covers&amp;utm_content=lp2-nav" target="_blank" rel="nofollow sponsored noopener">Today's $139 Deal</a>
+    <a class="btn btn-primary btn-sm" data-checkout data-compact data-cta="lp2-nav" href="https://www.seatcoversolutions.com/pages/2024-toyota-tacoma-deal-luxury-seat-covers?utm_source=seatcoverreview&amp;utm_medium=affiliate&amp;utm_campaign=2024_toyota_tacoma_seat_covers&amp;utm_content=lp2-nav" target="_blank" rel="nofollow sponsored noopener">Today's $139 Deal</a>
   </nav>
 </div></header>
 
@@ -853,7 +855,10 @@ function syncConfigurator(s){
     $('howto').hidden=true;
   }
   var sub=$('stickysub');if(sub&&r.ok)sub.textContent=r.color.name+' · '+r.setup.label+' · 4.9★ · '+money(r.price)+' · 30-day returns';
-  var sc=$('scta');if(sc&&r.ok)sc.textContent='Get Mine — '+money(r.price)+' + $139 Add-Ons';
+  if(r.ok)document.querySelectorAll('.btn[data-checkout]:not(#cta),.mstickycta[data-checkout]').forEach(function(a){
+    var sub=a.hasAttribute('data-compact')?null:el('small',{text:r.setup.label+' · '+r.color.name});
+    a.textContent='';a.appendChild(el('span',{class:'ctawrap'},[el('span',{text:'Add to Cart · '+money(r.price)}),sub]));
+  });
   syncCheckoutLinks(r);
 }
 
