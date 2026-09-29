@@ -215,8 +215,19 @@ legend.optlabel+*{clear:both}
 .buy .cta .btn{width:100%;font-size:16px;padding:12px 16px}
 .ctawrap{display:flex;flex-direction:column;align-items:center;line-height:1.2}
 .ctawrap small{font-size:12px;font-weight:600;opacity:.72;margin-top:3px;letter-spacing:.01em;text-transform:none}
-.sticky .btn,.final .btn{padding-top:10px;padding-bottom:10px}
-.mstickycta{padding-top:10px!important;padding-bottom:10px!important}
+.final .btn{padding-top:10px;padding-bottom:10px}
+/* sticky CTA pill: icon + price/selection + arrow chip */
+.ctapill{justify-content:space-between!important;gap:12px!important;padding:7px 7px 7px 8px!important;text-align:left;animation:ctaPulseSm 2.2s ease-out infinite!important}
+.ctapill .ctawrap{align-items:flex-start;flex:1;min-width:0}
+.ctapill .ctawrap span{font-size:15px;font-weight:800;letter-spacing:-.005em;white-space:nowrap}
+.ctapill .ctawrap small{font-size:11.5px;opacity:.78;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ctapill .ctaic{width:36px;height:36px;border-radius:50%;background:rgba(19,22,28,.1);display:grid;place-items:center;flex:0 0 auto}
+.ctapill .ctago{width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;flex:0 0 auto;transition:transform .2s}
+.ctapill:hover .ctago{transform:translateX(3px)}
+.sticky .ctapill{min-width:340px}
+.mstickycta.ctapill{text-transform:none;letter-spacing:0;font-size:15px}
+@keyframes ctaPulseSm{0%{box-shadow:0 0 0 0 rgba(255,175,40,.45),0 10px 22px -12px rgba(0,0,0,.35)}70%{box-shadow:0 0 0 9px rgba(255,175,40,0),0 10px 22px -12px rgba(0,0,0,.35)}100%{box-shadow:0 0 0 0 rgba(255,175,40,0),0 10px 22px -12px rgba(0,0,0,.35)}}
+@media(prefers-reduced-motion:reduce){.ctapill{animation:none!important}}
 .howto{font-size:12.5px;color:var(--mut);margin:10px 0 0;text-align:center;line-height:1.5}
 .cfgerr{margin:12px 0 0;background:var(--danger-soft);color:var(--danger);border:1px solid #fecdca;border-radius:12px;padding:10px 14px;font-size:13px;font-weight:600}
 .cfgerr[hidden]{display:none}
@@ -857,7 +868,14 @@ function syncConfigurator(s){
   var sub=$('stickysub');if(sub&&r.ok)sub.textContent=r.color.name+' · '+r.setup.label+' · 4.9★ · '+money(r.price)+' · 30-day returns';
   if(r.ok)document.querySelectorAll('.btn[data-checkout]:not(#cta),.mstickycta[data-checkout]').forEach(function(a){
     var sub=a.hasAttribute('data-compact')?null:el('small',{text:r.setup.label+' · '+r.color.name});
-    a.textContent='';a.appendChild(el('span',{class:'ctawrap'},[el('span',{text:'Add to Cart · '+money(r.price)}),sub]));
+    var wrap=el('span',{class:'ctawrap'},[el('span',{text:'Add to Cart · '+money(r.price)}),sub]);
+    a.textContent='';
+    if(a.id==='scta'||a.classList.contains('mstickycta')){ // sticky bars: cart icon + text + arrow chip
+      a.classList.add('ctapill');
+      a.appendChild(el('span',{class:'ctaic','aria-hidden':'true'},[icon(['M6 8h12l-1.2 12H7.2L6 8z','M9 8V7a3 3 0 0 1 6 0v1'],{size:17,sw:2.2})]));
+      a.appendChild(wrap);
+      a.appendChild(el('span',{class:'ctago','aria-hidden':'true'},[icon(['M5 12h14','M13 6l6 6-6 6'],{size:16,sw:2.6})]));
+    }else a.appendChild(wrap);
   });
   syncCheckoutLinks(r);
 }
